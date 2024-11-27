@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex h-screen">
-      <div className="w-1/4 bg-gray-50 h-full p-4 border-r">
+      <div className="w-1/4 bg-gray-50 h-full p-20 border-r">
         <h2 className="text-lg font-bold mb-4">Your lists</h2>
         <div className="space-y-3">
           <label className="flex items-center cursor-pointer">
@@ -31,7 +31,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           </button>
         </div>
       </div>
-      <main className="flex-1 bg-gray-100 p-6">{children}</main>
+      <main className="flex-1 bg-gray-100 p-20">{children}</main>
     </div>
   );
 }
