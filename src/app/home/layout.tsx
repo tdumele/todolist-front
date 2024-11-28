@@ -5,8 +5,8 @@ export default function Layout({ children }: { children: ReactNode }) {
 
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/4 bg-gray-50 h-full p-20 border-r">
+    <div className="flex flex-col md:flex-row h-screen">
+      <div className="w-full md:w-1/4 bg-gray-50 h-auto md:h-full p-10 md:p-20 lg:p-40 border-r">
         <h2 className="text-lg font-bold mb-4">Your lists</h2>
         <div className="space-y-3">
           <label className="flex items-center cursor-pointer">
@@ -31,7 +31,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           </button>
         </div>
       </div>
-      <main className="flex-1 bg-gray-100 p-20">{children}</main>
+      <main className="flex-1 bg-gray-100 p-10 md:p-20 lg:p-32">{children}</main>
     </div>
   );
 }
