@@ -12,7 +12,7 @@ export default function Home() {
       title: 'Learning Figma',
       description: 'Learn Figma for UI/UX Design',
       checked: false,
-      date: '2024-12-12T12:00:00',
+      dueDate: '2024-12-12T12:00:00',
       category: {
         id: 1,
         title: 'Personal',
@@ -23,7 +23,7 @@ export default function Home() {
       title: 'Learning NextJS',
       description: 'Learn NextJS with TailwindCSS',
       checked: false,
-      date: '2023-12-12T12:00:00',
+      dueDate: '2023-12-12T12:00:00',
       category: {
         id: 1,
         title: 'Personal',
@@ -71,12 +71,12 @@ export default function Home() {
       <ul>
         {tasks.map((task, index) => {
 
-          if (!showFinishedTasks && isOverdue(task.date) ) return null;
+          if (!showFinishedTasks && isOverdue(task.dueDate)) return null;
           else return (
             <li
               key={index}
               className={`flex items-center justify-between  mb-2 p-2 border ${
-                isOverdue(task.date) ? 'border-red-500 bg-red-50' : 'bg-white'
+                isOverdue(task.dueDate) ? 'border-red-500 bg-red-50' : 'bg-white'
               } rounded`}
             >
               <div className="flex items-center">
@@ -84,8 +84,8 @@ export default function Home() {
                 <span>{task.title}</span>
               </div>
               <div className="flex items-center">
-                {!!task.date &&
-                  <span className="text-gray-700 rounded-md bg-gray-300 px-2 py-1 mr-2">{task.date}</span>}
+                {!!task.dueDate &&
+                  <span className="text-gray-700 rounded-md bg-gray-300 px-2 py-1 mr-2">{task.dueDate}</span>}
                 <button className=" w-8 h-8 rounded-lg bg-gray-300 hover:bg-gray-400">
                   <div className="flex flex-col items-center space-y-1">
                     <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
