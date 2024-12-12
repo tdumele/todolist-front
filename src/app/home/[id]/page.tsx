@@ -1,45 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { GetTasksResponse } from '@/app/home/[id]/page.types';
+import { useParams } from 'next/navigation';
+
 
 export default function Home() {
-
+  // TODO store it in context
   const [showFinishedTasks, setShowFinishedTasks] = useState(false);
+  const [tasks, setTasks] = useState<GetTasksResponse | []>([]);
+  const { id } = useParams<{ id: string } >()
 
-  const tasks = [
-    {
-      id: 1,
-      title: 'Learning Figma',
-      description: 'Learn Figma for UI/UX Design',
-      checked: false,
-      dueDate: '2024-12-12T12:00:00',
-      category: {
-        id: 1,
-        title: 'Personal',
-      },
-    },
-    {
-      id: 1,
-      title: 'Learning NextJS',
-      description: 'Learn NextJS with TailwindCSS',
-      checked: false,
-      dueDate: '2023-12-12T12:00:00',
-      category: {
-        id: 1,
-        title: 'Personal',
-      },
-    },
-    {
-      id: 1,
-      title: 'Learning Mobile Dev',
-      description: 'Learn Mobile Dev with Flutter',
-      checked: false,
-      category: {
-        id: 1,
-        title: 'Personal',
-      },
-    },
-  ];
+  useEffect(() => {
+    async function fetchTasks() : Promise<GetTasksResponse> {
+      const request = await fetch(process.env.NEXT_PUBLIC_TODOLIST_MS_BASEURL + `/api/v1/todolists/${id}/tasks`);
+      return request.json();
+    }
+    fetchTasks().then(data => setTasks(data));
+  }, [id] );
 
   function isOverdue(date?: string) {
     if (date) {

@@ -2,13 +2,14 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 import { GetTodolistsResponse } from '@/app/todolists.types';
+import Link from 'next/link';
 
 export default function Layout({ children }: { children: ReactNode }) {
 
- const [todolists, setTodolists] = useState([] as GetTodolistsResponse[]);
+  const [todolists, setTodolists] = useState([] as GetTodolistsResponse[]);
 
   useEffect(() => {
-    async function fetchTodolists() : Promise<GetTodolistsResponse[]> {
+    async function fetchTodolists(): Promise<GetTodolistsResponse[]> {
       const request = await fetch(process.env.NEXT_PUBLIC_TODOLIST_MS_BASEURL + '/api/v1/todolists');
       return request.json();
     }
@@ -36,11 +37,14 @@ export default function Layout({ children }: { children: ReactNode }) {
         <h2 className="text-lg font-bold mb-4">Your lists</h2>
         <div className="space-y-3">
           {todolists.map((todolist) => (
-              <label key={todolist.id} className="flex items-center cursor-pointer">
-                <input type="radio" name="listType" value={todolist.id} className="hidden" />
-                <span className={`w-5 h-5 rounded-lg flex-shrink-0 ring-2 ring-offset-2 ring-gray-700 ${randomColor()}`}></span>
-                <span className="ml-3 text-gray-700">{todolist.title}</span>
-              </label>
+              <Link href={`/home/${todolist.id}`} key={todolist.id}>
+                <label className="flex items-center cursor-pointer pb-2">
+                  <input type="radio" name="listType" value={todolist.id} className="hidden" />
+                  <span
+                    className={`w-5 h-5 rounded-lg flex-shrink-0 ring-2 ring-offset-2 ring-gray-700 ${randomColor()}`}></span>
+                  <span className="ml-3 text-gray-700">{todolist.title}</span>
+                </label>
+              </Link>
             ),
           )}
           <button className="mt-4 w-full p-2 bg-gray-200 rounded hover:bg-gray-300">
