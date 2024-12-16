@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 
 export default function Home() {
-  const [error, setError] = useState(false);
+  const [error] = useState(false);
   const inputClasses = classNames(
     {
       'shadow': true,

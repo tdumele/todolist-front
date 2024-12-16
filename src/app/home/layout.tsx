@@ -15,7 +15,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     }
 
     fetchTodolists().then((data) => setTodolists(data));
-    todolists.map((todolist) => console.log(todolist));
   }, []);
 
   function randomColor() {
