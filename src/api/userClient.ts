@@ -8,5 +8,5 @@ export const createUser = async (data: CreateUserRequest) => {
     },
     body: JSON.stringify(data)
   });
-  return await response.json();
+  return response.url;
 }

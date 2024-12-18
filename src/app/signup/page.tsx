@@ -10,6 +10,7 @@ import { SignUpSchema, SignUpSchemaType } from '@/app/signup/SignUpSchemaValidat
 
 export default function Home() {
   const [error] = useState(false);
+  const [created, setCreated] = useState(false);
   const inputClasses = classNames(
     {
       'shadow': true,
@@ -33,12 +34,16 @@ export default function Home() {
     formState: { errors }
   } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) });
 
+  function handleCreateUser(data: SignUpSchemaType) {
+    createUser(data).then(() => setCreated(true));
+  }
+
   return (
     <div
       className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <div className="w-full max-w-xs">
-          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(createUser)}>
+          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit(handleCreateUser)}>
             <p className="w-full mb-2 ">
               <Link href={'/'} className={'text-indigo-500 hover:text-indigo-800 text-xs'}>&lt;back</Link>
               <br />
@@ -59,7 +64,7 @@ export default function Home() {
                 Password
               </label>
               <input
-                className={inputClasses} {...register("password")}
+                className={inputClasses} {...register('password')}
                 id="password" type="password" placeholder="******************"
               />
               {errors.password && <p className="text-red-500 text-xs italic">{errors.password.message}</p>}
@@ -69,7 +74,7 @@ export default function Home() {
                 Email
               </label>
               <input
-                className={inputClasses} {...register("email")}
+                className={inputClasses} {...register('email')}
                 id="email" type="email" placeholder="example@domain.com" />
               {errors.email && <p className="text-red-500 text-xs italic">{errors.email.message}</p>}
             </div>
@@ -80,6 +85,8 @@ export default function Home() {
                 Sign Up
               </button>
             </div>
+            {created && <p className="text-indigo-500 text-xs italic mt-2"><span className={"text-sm"}>Welcome!</span><br/>
+              Your account has been successfully created.<br/><Link className={"font-bold"} href={"/"}>Log in</Link> now to start exploring our services!</p>}
           </form>
           <p className="text-center w-full block mb-2">
             Already a user? <Link className="text-center text-indigo-500 hover:text-indigo-800" href={'/'}>Login</Link>
