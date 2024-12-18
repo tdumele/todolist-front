@@ -43,7 +43,7 @@ export default function Home() {
         <div className="w-full max-w-xs">
           <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <p className="w-full mb-2 ">
-              <span className="w-full block text-center mb-5 text-xl">Already an account</span>
+              <span className="w-full block text-center mb-5 text-xl">Login</span>
             </p>
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
@@ -74,8 +74,8 @@ export default function Home() {
               </a>
             </div>
           </form>
-          <p className="text-center text-indigo-500 hover:text-indigo-800 w-full block mb-2">
-            <Link href={'/signup'}>Sign Up</Link>
+          <p className="text-center w-full block mb-2">
+            Need an account ? <Link className={"text-indigo-500 hover:text-indigo-800"} href={'/signup'}>Sign Up</Link>
           </p>
 
           <p className="text-center text-gray-500 text-xs w-full block">

@@ -51,7 +51,7 @@ export default function Home() {
               </label>
               <input
                 className={inputClasses} {...register('username')}
-                id="username" type="text" placeholder="Username"  />
+                id="username" type="text" placeholder="Username" />
               {errors.username && <p className="text-red-500 text-xs italic">{errors.username.message}</p>}
             </div>
             <div className="mb-6">
@@ -61,7 +61,7 @@ export default function Home() {
               <input
                 className={inputClasses} {...register("password")}
                 id="password" type="password" placeholder="******************"
-                />
+              />
               {errors.password && <p className="text-red-500 text-xs italic">{errors.password.message}</p>}
             </div>
             <div className="mb-6">
@@ -81,6 +81,9 @@ export default function Home() {
               </button>
             </div>
           </form>
+          <p className="text-center w-full block mb-2">
+            Already a user? <Link className="text-center text-indigo-500 hover:text-indigo-800" href={'/'}>Login</Link>
+          </p>
           <p className="text-center text-gray-500 text-xs w-full block">
             &copy;2024 Teddy Dumélé corp. All rights reserved.
           </p>
