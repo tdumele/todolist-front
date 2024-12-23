@@ -9,7 +9,6 @@ import { createUser } from '@/api/userClient';
 import { SignUpSchema, SignUpSchemaType } from '@/app/signup/SignUpSchemaValidation';
 
 export default function Home() {
-  const [error] = useState(false);
   const [created, setCreated] = useState(false);
   const inputClasses = classNames(
     {
@@ -24,7 +23,6 @@ export default function Home() {
       'leading-tight': true,
       'focus:outline-none': true,
       'focus:shadow-outline': true,
-      'border-red-500': error,
     },
   );
 
