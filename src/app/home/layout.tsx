@@ -1,21 +1,12 @@
 'use client';
 
-import { ReactNode, useEffect, useState } from 'react';
-import { GetTodolistsResponse } from '@/app/todolists.types';
+import { ReactNode } from 'react';
 import Link from 'next/link';
+import { useTodolists } from '@/api/hook/useTodolists';
 
 export default function Layout({ children }: { children: ReactNode }) {
 
-  const [todolists, setTodolists] = useState([] as GetTodolistsResponse[]);
-
-  useEffect(() => {
-    async function fetchTodolists(): Promise<GetTodolistsResponse[]> {
-      const request = await fetch(process.env.NEXT_PUBLIC_TODOLIST_MS_BASEURL + '/api/v1/todolists');
-      return request.json();
-    }
-
-    fetchTodolists().then((data) => setTodolists(data));
-  }, []);
+  const {todolists, loading, error} = useTodolists();
 
   function randomColor() {
     const colors = [
@@ -46,6 +37,8 @@ export default function Layout({ children }: { children: ReactNode }) {
               </Link>
             ),
           )}
+          {loading && <p>Loading...</p>}
+          {error && <p>Error loading todolists</p>}
           <button className="mt-4 w-full p-2 bg-gray-200 rounded hover:bg-gray-300">
             + Create new list
           </button>

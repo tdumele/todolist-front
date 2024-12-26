@@ -1,23 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { GetTasksResponse } from '@/app/home/[id]/page.types';
+import { useState } from 'react';
 import { useParams } from 'next/navigation';
+import { useTasks } from '@/api/hook/useTasks';
+import classNames from 'classnames';
+import { GetTaskResponse } from '@/api/dto/GetTasksResponse';
 
 
 export default function Home() {
   // TODO store it in context
   const [showFinishedTasks, setShowFinishedTasks] = useState(false);
-  const [tasks, setTasks] = useState<GetTasksResponse | []>([]);
   const { id } = useParams<{ id: string } >()
-
-  useEffect(() => {
-    async function fetchTasks() : Promise<GetTasksResponse> {
-      const request = await fetch(process.env.NEXT_PUBLIC_TODOLIST_MS_BASEURL + `/api/v1/todolists/${id}/tasks`);
-      return request.json();
-    }
-    fetchTasks().then(data => setTasks(data));
-  }, [id] );
+  const { tasks, loading, error } = useTasks({ todolistId: id });
 
   function isOverdue(date?: string) {
     if (date) {
@@ -34,6 +28,21 @@ export default function Home() {
     setShowFinishedTasks(!showFinishedTasks);
   }
 
+  const liClassNames = (task: GetTaskResponse)  => classNames({
+    'flex': true,
+    'items-center': true,
+    'justify-between': true,
+    'mb-2': true,
+    'p-2': true,
+    'border': true,
+    'rounded': true,
+    'bg-white': true,
+    'border-red-500': isOverdue(task.dueDate),
+    'bg-red-50': isOverdue(task.dueDate),
+    'line-through': task.checked,
+    'italic': task.checked,
+    'text-gray-400': task.checked,
+  })
 
   return (
     <div className="flex-1 p-4">
@@ -45,7 +54,8 @@ export default function Home() {
           className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-1 peer-focus:ring-blue-300 dark:peer-focus:ring-green-600 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
         <span className="ms-3 text-sm font-medium">Show finished tasks</span>
       </label>
-
+      {loading && <p>Loading...</p>}
+      {error && <p>Error loading tasks</p>}
       <ul>
         {tasks.map((task, index) => {
 
@@ -53,9 +63,7 @@ export default function Home() {
           else return (
             <li
               key={index}
-              className={`flex items-center justify-between  mb-2 p-2 border ${
-                isOverdue(task.dueDate) ? 'border-red-500 bg-red-50' : 'bg-white'
-              } rounded`}
+              className={liClassNames(task)}
             >
               <div className="flex items-center">
                 <input type="checkbox" name="task" value={task.title} className={'w-5 h-5 rounded-lg mr-2'} />
