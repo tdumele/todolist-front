@@ -3,5 +3,6 @@ export type GetTaskResponse = {
   title: string,
   description: string,
   dueDate: string,
-  checked: boolean
+  checked: boolean,
+  todolist: string
 }

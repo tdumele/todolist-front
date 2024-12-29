@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { useTasks } from '@/api/hook/useTasks';
 import classNames from 'classnames';
 import { GetTaskResponse } from '@/api/dto/GetTasksResponse';
+import { updateTask } from '@/api/todolistClient';
 
 
 export default function Home() {
@@ -44,6 +45,13 @@ export default function Home() {
     'text-gray-400': task.checked,
   })
 
+  function completeTask(task: GetTaskResponse) {
+    task.checked = !task.checked;
+    updateTask(task, id).then(() => {
+      console.log('Task updated');
+    });
+  }
+
   return (
     <div className="flex-1 p-4">
       <h1 className="text-3xl font-semibold mb-10">Good morning, Teddy! 👋</h1>
@@ -66,7 +74,7 @@ export default function Home() {
               className={liClassNames(task)}
             >
               <div className="flex items-center">
-                <input type="checkbox" name="task" value={task.title} className={'w-5 h-5 rounded-lg mr-2'} />
+                <input type="checkbox" name="task" value={task.title} className={'w-5 h-5 rounded-lg mr-2'} onChange={() => completeTask(task)} />
                 <span>{task.title}</span>
               </div>
               <div className="flex items-center">
