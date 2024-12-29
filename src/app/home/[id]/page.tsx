@@ -67,7 +67,7 @@ export default function Home() {
       <ul>
         {tasks.map((task, index) => {
 
-          if (!showFinishedTasks && isOverdue(task.dueDate)) return null;
+          if (!showFinishedTasks && task.checked) return null;
           else return (
             <li
               key={index}
