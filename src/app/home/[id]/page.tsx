@@ -11,7 +11,7 @@ import { updateTask } from '@/api/todolistClient';
 export default function Home() {
   // TODO store it in context
   const [showFinishedTasks, setShowFinishedTasks] = useState(false);
-  const { id } = useParams<{ id: string } >()
+  const { id } = useParams<{ id: string }>();
   const { tasks, loading, error } = useTasks({ todolistId: id });
 
   function isOverdue(date?: string) {
@@ -29,7 +29,7 @@ export default function Home() {
     setShowFinishedTasks(!showFinishedTasks);
   }
 
-  const liClassNames = (task: GetTaskResponse)  => classNames({
+  const liClassNames = (task: GetTaskResponse) => classNames({
     'flex': true,
     'items-center': true,
     'justify-between': true,
@@ -43,7 +43,7 @@ export default function Home() {
     'line-through': task.checked,
     'italic': task.checked,
     'text-gray-400': task.checked,
-  })
+  });
 
   function completeTask(task: GetTaskResponse) {
     task.checked = !task.checked;
@@ -54,7 +54,7 @@ export default function Home() {
 
   return (
     <div className="flex-1 p-4">
-      <h1 className="text-3xl font-semibold mb-10">Good morning, Teddy! 👋</h1>
+      <h1 className="text-3xl font-semibold mb-10">Good morning ! 👋</h1>
 
       <label className="inline-flex items-center cursor-pointer mb-2">
         <input type="checkbox" value="" className="sr-only peer" onChange={handleTaskCheck} />
@@ -74,7 +74,8 @@ export default function Home() {
               className={liClassNames(task)}
             >
               <div className="flex items-center">
-                <input type="checkbox" name="task" value={task.title} className={'w-5 h-5 rounded-lg mr-2'} onChange={() => completeTask(task)} />
+                <input type="checkbox" name="task" defaultChecked={task.checked} className={'w-5 h-5 rounded-lg mr-2'}
+                       onChange={() => completeTask(task)} />
                 <span>{task.title}</span>
               </div>
               <div className="flex items-center">
